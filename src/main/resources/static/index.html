@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Szakdolgozat</title>
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body onload="createTable(); generateGrid();" onselectstart="return false;" unselectable="on">
+
+
+<div id="wrapper">
+    <div id="board">
+        <svg id='svgOne'></svg>
+        <div id="gridButtons">
+            <button class="control" id="resetGrid" onclick="resetGrid()">Reset map</button>
+        </div>
+    </div>
+    <div id="controls">
+        <div class="panel" id="clickModifiers">
+            <input checked="checked" id="increaseBox" onclick="setToIncrease()" type="checkbox">
+            <label class="controlImage" for="increaseBox"><img alt="Plus" src="./images/plus.png"></label>
+            <input id="decreaseBox" onclick="setToDecrease()" type="checkbox">
+            <label class="controlImage" for="decreaseBox"><img alt="Minus" src="./images/minus.png"></label>
+            <input id="startBox" onclick="setToStart()" type="checkbox">
+            <label class="controlImage" for="startBox"><img alt="Start" src="./images/start.png"></label>
+            <input id="finishBox" onclick="setToFinish()" type="checkbox">
+            <label class="controlImage" for="finishBox"><img alt="Finish" src="./images/finish.png"></label>
+            <input id="blockBox" onclick="setToBlock()" type="checkbox">
+            <label class="controlImage" for="blockBox"><img alt="Block" src="./images/block.png"></label>
+            <p id="description">Increases the number of the clicked cell.</p>
+        </div>
+        <div class="panel" id="noisePanel">
+            <div class="sliderContainer">
+                <label for="startValue">Starting Value: </label>
+                <input class="slider" id="startValue" max='30' min="0" step="1" type="range" value="15">
+                <span id="value">15</span>
+            </div>
+            <div class="sliderContainer">
+                <label for="randRange">Range: </label>
+                <input class="slider" id="randRange" max='70' min="10" step="1" type="range" value="40">
+                <span id="range">40</span>
+            </div>
+
+            <button class="control" id="generateNoise" onclick="generateNoise()">Generate map</button>
+        </div>
+        <div class="panel" id="algorithmPanel">
+            <div class="sliderContainer">
+                <label for="algorithmSpeed">Algorithm speed: </label>
+                <input class="slider" id="algorithmSpeed" max='5' min="0" step="1" type="range" value="0">
+            </div>
+            <p>Algorithm steps: <span id="stepCount">0</span></p>
+            <p>Duration: <span id="algorithmDuration">0 ms</span></p>
+            <p>Path length: <span id="pathLength">0</span></p>
+            <div style="text-align: center">
+                <button class="control" id="startAlgorithm" onclick="findPath()">Run algorithm</button>
+            </div>
+        </div>
+        <div class="panel" id="savePanel">
+            <form>
+                <input onsubmit="return false;" id="file" name="file" style="text-align: center; margin: auto;" type="file" accept=".txt">
+            </form>
+            <button class="control" onclick="loadGrid()">Load file</button>
+            <button class="control" onclick="saveGrid()">Save map</button>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="js/main.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</html>
